@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hangman Game</h1>
+        <div id="game">
+            <div id="word" class="word">{{ display_word }}</div>
+            <div id="wrong-guesses" class="wrong-guesses">
+                Wrong guesses ({{ wrong_guesses|length }}/{{ max_attempts }}):
+                <span id="wrong-list">{{ wrong_guesses|join(' ') }}</span>
+            </div>
+            <div id="input-area">
+                <input type="text" id="letter" maxlength="1" autocomplete="off" placeholder="Enter a letter" {% if game_over %}disabled{% endif %}>
+                <button id="guess-btn" {% if game_over %}disabled{% endif %}>Guess</button>
+            </div>
+            <div id="message"></div>
+            <div id="result" style="display: {% if game_over %}block{% else %}none{% endif %};">
+                {% if won %}
+                    <span class="win">Congratulations! You won!</span>
+                {% else %}
+                    <span class="lose">Game over! The word was: <b>{{ word }}</b></span>
+                {% endif %}
+                <form method="post" action="/restart">
+                    <button type="submit">Restart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        const guessBtn = document.getElementById('guess-btn');
+        const letterInput = document.getElementById('letter');
+        const messageDiv = document.getElementById('message');
+        const wordDiv = document.getElementById('word');
+        const wrongList = document.getElementById('wrong-list');
+        const resultDiv = document.getElementById('result');
+
+        function updateGame(data) {
+            wordDiv.textContent = data.display_word;
+            wrongList.textContent = data.wrong_guesses.join(' ');
+            if (data.game_over) {
+                resultDiv.style.display = 'block';
+                if (data.won) {
+                    resultDiv.innerHTML = '<span class="win">Congratulations! You won!</span><form method="post" action="/restart"><button type="submit">Restart</button></form>';
+                } else {
+                    resultDiv.innerHTML = `<span class="lose">Game over! The word was: <b>${data.word}</b></span><form method="post" action="/restart"><button type="submit">Restart</button></form>`;
+                }
+                guessBtn.disabled = true;
+                letterInput.disabled = true;
+            }
+        }
+
+        guessBtn && guessBtn.addEventListener('click', function() {
+            const letter = letterInput.value.trim().toLowerCase();
+            if (!letter) return;
+            fetch('/guess', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `letter=${letter}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    messageDiv.textContent = data.error;
+                } else {
+                    messageDiv.textContent = '';
+                    updateGame(data);
+                }
+                letterInput.value = '';
+                letterInput.focus();
+            });
+        });
+        letterInput && letterInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') guessBtn.click();
+        });
+    </script>
+</body>
+</html>

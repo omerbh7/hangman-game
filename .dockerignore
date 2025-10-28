@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtualenv
+.venv/
+venv/
+ENV/
+
+# Docker
+*.db
+*.sqlite3
+
+# VS Code
+.vscode/
+
+# Flask session
+instance/
+
+# Ignore static build artifacts
+staticfiles/

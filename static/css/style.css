@@ -1,0 +1,103 @@
+body {
+    background: linear-gradient(120deg, #232526, #414345);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #f8f8f2;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 400px;
+    margin: 60px auto;
+    background: #282a36;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    padding: 32px 24px 24px 24px;
+    text-align: center;
+}
+
+h1 {
+    color: #50fa7b;
+    margin-bottom: 24px;
+    letter-spacing: 2px;
+}
+
+.word {
+    font-size: 2.2em;
+    letter-spacing: 0.25em;
+    margin: 24px 0 16px 0;
+    font-weight: bold;
+}
+
+.wrong-guesses {
+    color: #ff5555;
+    margin-bottom: 16px;
+    font-size: 1.1em;
+}
+
+#input-area {
+    margin-bottom: 18px;
+}
+
+#letter {
+    padding: 8px 12px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+    margin-right: 8px;
+    background: #44475a;
+    color: #f8f8f2;
+}
+
+#guess-btn {
+    padding: 8px 18px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    border: none;
+    background: #50fa7b;
+    color: #282a36;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#guess-btn:disabled {
+    background: #44475a;
+    color: #888;
+    cursor: not-allowed;
+}
+
+#message {
+    color: #f1fa8c;
+    min-height: 24px;
+    margin-bottom: 8px;
+}
+
+.win {
+    color: #50fa7b;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.lose {
+    color: #ff5555;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+button[type="submit"] {
+    margin-top: 18px;
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: none;
+    background: #8be9fd;
+    color: #282a36;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+button[type="submit"]:hover {
+    background: #50fa7b;
+}
