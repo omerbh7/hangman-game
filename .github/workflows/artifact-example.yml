@@ -16,14 +16,14 @@ jobs:
       name: file
       path: file.txt
 
-  print:
-   runs-on: ubuntu-latest
-   needs: create
-   steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v4
-      with:
-       name: file
-       path: .
-    - name: Print artifact
-      run: cat file.txt
+ print:
+  runs-on: ubuntu-latest
+  needs: create
+  steps:
+  - name: Download artifact
+    uses: actions/download-artifact@v4
+    with:
+      name: file
+      path: .
+  - name: Print artifact
+    run: cat file.txt
